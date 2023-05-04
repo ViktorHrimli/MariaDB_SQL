@@ -3,10 +3,12 @@ const cors = require("cors");
 
 const app: Express = express();
 
+import { router } from "./routers/router";
+
 app.use(cors());
 app.use(express.json());
 
-app.use("api/", () => {});
+app.use("/api", router);
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({ message: "Not found", status: "Faild" });

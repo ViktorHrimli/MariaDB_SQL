@@ -9,20 +9,6 @@ app.listen(5000, () => {
       .getConnection()
       .then((conn) => {
         console.log("Connected successfully to MariaDB database");
-        conn
-          .query(
-            "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255))"
-          )
-          .then((result) => {
-            console.log("Table created successfully:", result);
-          })
-          .catch((error) => {
-            console.log("Error creating table:", error);
-          })
-          .finally(() => {
-            conn.release();
-            console.log("Connection released");
-          });
       })
       .catch((error) => {
         console.log("Error connecting to database:", error);
