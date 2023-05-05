@@ -12,7 +12,7 @@ count_person INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     contact_person VARCHAR(255) NOT NULL,
-    credit_card VARCHAR(16) NOT NULL,
+    credit_card VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,
 )
 
