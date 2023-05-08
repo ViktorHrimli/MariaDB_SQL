@@ -11,6 +11,21 @@ router.post("/table", async (req, res, next) => {
     .then((con) => res.status(201).json({ msg: "Table create successfully!" }));
 });
 
+router.post("/ref/:id", async (req, res, next) => {
+  const { city, street, location } = req.body;
+  const person_id = req.params.id;
+
+  pool
+    .query(
+      "INSERT INTO adress (city, street, location, person_id) VALUES (?, ?, ?, ?)",
+      [city, street, location, person_id]
+    )
+    .then((con) => {
+      res.json({ msg: "Table create!" });
+      console.log(con);
+    });
+});
+
 router.post("/person", async (req, res, next) => {
   const { name, phone, contact_person, credit_card, status } = req.body;
   pool
@@ -38,4 +53,11 @@ router.delete("/delete/:id", async (req, res, next) => {
     );
 });
 
+router.get("/innerjoin/:id", async (req, res, next) => {
+  pool
+    .query(
+      `SELECT person.id, person.name, person.phone, adress.location, adress.city, adress.street, adress.person_id FROM person INNER JOIN adress ON person.id = ${req.params.id}`
+    )
+    .then((result) => res.status(200).json(result));
+});
 export { router };
