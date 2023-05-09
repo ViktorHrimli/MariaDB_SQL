@@ -5,6 +5,8 @@ CREATE TABLE family (
 id INT PRIMARY KEY AUTO_INCREMENT,
 surname_family VARCHAR(255) NOT NULL,
 count_person INT NOT NULL,
+person_id INT NOT NULL, 
+FOREIGN KEY (person_id) REFERENCES person(id)
 )
 
  CREATE TABLE person (

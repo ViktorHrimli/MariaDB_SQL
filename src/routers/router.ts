@@ -40,8 +40,12 @@ router.post("/person", async (req, res, next) => {
 });
 
 router.get("/get", async (req, res, next) => {
+  const page: any = req.query.pages;
+
   pool
-    .query("SELECT * FROM person")
+    .query(
+      `SELECT * FROM person LIMIT ${2} OFFSET ${page === "1" ? 0 : +page + 1}`
+    )
     .then((result) => res.status(200).json(result));
 });
 
@@ -60,4 +64,25 @@ router.get("/innerjoin/:id", async (req, res, next) => {
     )
     .then((result) => res.status(200).json(result));
 });
+
+router.get("/leftjoin/:id", async (req, res, next) => {
+  pool
+    .query(
+      `SELECT person.id, person.name, adress.city, adress.location, adress.street FROM person LEFT JOIN adress ON person.id = ${req.params.id} `
+    )
+    .then((result) => res.json(result));
+});
+
+router.post("/family", async (req, res, next) => {
+  pool.query(`INSERT INTO family (surname_family, count_person )`);
+});
+
 export { router };
+
+// CREATE TABLE family (
+// id INT PRIMARY KEY AUTO_INCREMENT,
+// surname_family VARCHAR(255) NOT NULL,
+// count_person INT NOT NULL,
+// person_id INT NOT NULL,
+// FOREIGN KEY (person_id) REFERENCES person(id)
+// )
